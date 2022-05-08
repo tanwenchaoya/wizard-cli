@@ -1,6 +1,6 @@
 {
   "name": "@fighter-cli/core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "fighter-cli core",
   "author": "tanwenchaoya <1781104182@qq.com>",
   "homepage": "",
@@ -23,8 +23,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@fighter-cli/log": "^1.0.2",
-    "@fighter-cli/utils": "^1.0.2",
+    "@fighter-cli/log": "^1.0.3",
+    "@fighter-cli/utils": "^1.0.3",
     "colors": "^1.4.0",
     "dotenv": "^16.0.0",
     "import-local": "^3.1.0",
