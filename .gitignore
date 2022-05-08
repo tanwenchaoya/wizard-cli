@@ -1,0 +1,8 @@
+node_modules
+packages/**/node_modules
+packages/**/package-lock.json
+core/**/node_modules
+utils/**/node_modules
+models/**/node_modules
+command/**/node_modules
+

@@ -1,0 +1,33 @@
+{
+  "name": "@fighter-cli/core",
+  "version": "1.0.0",
+  "description": "fighter-cli core",
+  "author": "tanwenchaoya <1781104182@qq.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/core.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "bin": {
+    "fighter-cli": "bin/index.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmmirror.com/"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@fighter-cli/log": "file:../../utils/log",
+    "@fighter-cli/utils": "file:../../utils/utils",
+    "colors": "^1.4.0",
+    "import-local": "^3.1.0",
+    "npmlog": "^6.0.2",
+    "semver": "^7.3.7"
+  }
+}
