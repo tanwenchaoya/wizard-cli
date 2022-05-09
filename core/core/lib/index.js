@@ -9,7 +9,7 @@ const pathExists = require('path-exists').sync
 
 const constant = require('./const')
 let args, config;
-function core() {
+async function core() {
     try {
         checkPkgVersion()
         checkNodeVersion()
@@ -17,14 +17,24 @@ function core() {
         checkUserHome()
         checkInputArgs()
         checkEnv()
-        checkGlobalUpdate()
+        await checkGlobalUpdate()
         log.verbose('debug', 'core')
     } catch (e) {
         log.error(e.message)
     }
 }
-function checkGlobalUpdate() {
-    //1.获取当前版本号和
+async function checkGlobalUpdate() {
+    //1.获取当前版本号和模块名
+    const currentVersion = pkg.version
+    const npmName = pkg.name
+    //2.调用npm api获取所有版本号
+    const {getNpmSemverVersion} = require('@fighter-cli/get-npm-info')
+    const lastVersion = await getNpmSemverVersion(currentVersion,npmName)
+    if(lastVersion && semver.gt(lastVersion,currentVersion)){
+        log.warn(colors.yellow(`请手动更新${npmName},当前最新版本为${lastVersion}`))
+    }
+    //3.比对版本号
+    //4.获取最新版本号提示下载
 }
 function checkEnv() {
     const dotenv = require('dotenv')
