@@ -3,25 +3,59 @@ const path = require('path');
 const semver = require('semver');
 const colors = require('colors/safe');
 const pkg = require('../package.json')
+const commander = require('commander')
 const log = require('@fighter-cli/log')
 const userHome = require('user-home')
 const pathExists = require('path-exists').sync
-
+const init = require('@fighter-cli/init')
 const constant = require('./const')
-let args, config;
+let args;
+const program = new commander.Command()
 async function core() {
     try {
         checkPkgVersion()
         checkNodeVersion()
         checkRoot()
         checkUserHome()
-        checkInputArgs()
+        // checkInputArgs()
         checkEnv()
         await checkGlobalUpdate()
         log.verbose('debug', 'core')
+        registerCommand()
     } catch (e) {
         log.error(e.message)
     }
+}
+function registerCommand() {
+    program
+        .name(Object.keys(pkg.bin)[0])
+        .usage('<command> [options]')
+        .version(pkg.version)
+        .option('-d, --debug', '是否开启调试模式',false)
+    program
+        .command('init [projectName]')
+        .option('-f, --force', '是否强制初始化')
+        .action(init)
+    program.on('option:debug', function () {
+        if (program.opts().debug) {
+             process.env.LOG_LEVEL = 'verbose'
+        } else {
+             process.env.LOG_LEVEL = 'info'
+        }
+        log.level = process.env.LOG_LEVEL
+    })
+    program.on('command:*', function (obj) {
+        console.log(obj)
+        const availableCommands = program.commands.map(cmd => cmd.name)
+        console.log(colors.red('未知的命令：' + obj[0]))
+        console.log(colors.green('可用的命令：'+availableCommands.join(',')))
+    })
+    console.log(process.argv.length,program.args)
+    if (program.args && program.args.length <1) {
+        program.outputHelp();
+        console.log()
+    }
+     program.parse(process.argv)
 }
 async function checkGlobalUpdate() {
     //1.获取当前版本号和模块名
@@ -75,7 +109,6 @@ function checkUserHome() {
     if (!userHome || !pathExists(userHome)) {
         throw new Error(colors.red('User not found'))
     }
-    console.log(userHome, process.platform)
 }
 function checkRoot() {
     if (process.geteuid) {

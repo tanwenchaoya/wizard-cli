@@ -3,7 +3,6 @@ const axios = require('axios')
 const urljoin = require('url-join')
 const semver = require('semver')
 function getNpmInfo(npmName, registry) {
-    console.log(npmName)
     if (!npmName) {
         return null
     }
@@ -18,7 +17,6 @@ function getNpmInfo(npmName, registry) {
     }).catch(err => {
         return promise.reject(err)
     })
-    console.log(npmInfoUrl)
     // TODO:https://registry.npmjs.org/@fighter-cli/core
 }
 async function getNpmVersion(npmName, registry) {

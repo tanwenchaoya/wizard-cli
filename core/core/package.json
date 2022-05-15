@@ -24,10 +24,12 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@fighter-cli/log": "file:../../utils/log",
     "@fighter-cli/get-npm-info": "file:../../utils/get-npm-info",
+    "@fighter-cli/log": "file:../../utils/log",
+    "@fighter-cli/init": "file:../../commands/init",
     "@fighter-cli/utils": "^1.0.5",
     "colors": "^1.4.0",
+    "commander": "^9.2.0",
     "dotenv": "^16.0.0",
     "import-local": "^3.1.0",
     "minimist": "^1.2.6",
