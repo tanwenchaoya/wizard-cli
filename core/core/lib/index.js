@@ -7,11 +7,11 @@ const log = require('@fighter-cli/log')
 const userHome = require('user-home')
 const pathExists = require('path-exists').sync
 const init = require('@fighter-cli/init')
-const exec =require('@fighter-cli/exec')
+const exec = require('@fighter-cli/exec')
 const constant = require('./const')
 const program = new commander.Command()
 async function core() {
-    try { 
+    try {
         await prepare()
         registerCommand()
     } catch (e) {
@@ -23,35 +23,35 @@ function registerCommand() {
         .name(Object.keys(pkg.bin)[0])
         .usage('<command> [options]')
         .version(pkg.version)
-        .option('-d, --debug', '是否开启调试模式',false)
-        .option('-tp, --targetPath <targetPath>', '是否启用本地文件调试','')
+        .option('-d, --debug', '是否开启调试模式', false)
+        .option('-tp, --targetPath <targetPath>', '是否启用本地文件调试', '')
     program
         .command('init [projectName]')
         .option('-f, --force', '是否强制初始化')
         .action(exec)
     program.on('option:debug', function () {
         if (program.opts().debug) {
-             process.env.LOG_LEVEL = 'verbose'
+            process.env.LOG_LEVEL = 'verbose'
         } else {
-             process.env.LOG_LEVEL = 'info'
+            process.env.LOG_LEVEL = 'info'
         }
         log.level = process.env.LOG_LEVEL
     })
-    program.on('option:targetPath', function(){
+    program.on('option:targetPath', function () {
         process.env.CLI_TARGET_PATH = program.opts().targetPath
     })
     program.on('command:*', function (obj) {
         const availableCommands = program.commands.map(cmd => cmd.name())
         console.log(colors.red('未知的命令：' + obj[0]))
-        console.log(colors.green('可用的命令：'+availableCommands.join(',')))
+        console.log(colors.green('可用的命令：' + availableCommands.join(',')))
     })
-     program.parse(process.argv)
-     if (program.args && program.args.length < 1) {
+    program.parse(process.argv)
+    if (program.args && program.args.length < 1) {
         program.outputHelp();
         console.log()
     }
 }
-async function prepare(){
+async function prepare() {
     checkPkgVersion()
     checkNodeVersion()
     checkRoot()
@@ -64,9 +64,9 @@ async function checkGlobalUpdate() {
     const currentVersion = pkg.version
     const npmName = pkg.name
     //2.调用npm api获取所有版本号
-    const {getNpmSemverVersion} = require('@fighter-cli/get-npm-info')
-    const lastVersion = await getNpmSemverVersion(currentVersion,npmName)
-    if(lastVersion && semver.gt(lastVersion,currentVersion)){
+    const { getNpmSemverVersion } = require('@fighter-cli/get-npm-info')
+    const lastVersion = await getNpmSemverVersion(currentVersion, npmName)
+    if (lastVersion && semver.gt(lastVersion, currentVersion)) {
         log.warn(colors.yellow(`请手动更新${npmName},当前最新版本为${lastVersion}`))
     }
     //3.比对版本号

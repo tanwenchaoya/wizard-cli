@@ -1,7 +1,7 @@
 {
-  "name": "@fighter-cli/exec",
+  "name": "@fighter-cli/package",
   "version": "1.0.0",
-  "description": "fighter-cli excute package",
+  "description": "fighter-cli npm module",
   "author": "tanwenchaoya <1781104182@qq.com>",
   "homepage": "https://github.com/tanwenchaoya/wizard-cli#readme",
   "license": "ISC",
@@ -27,7 +27,8 @@
     "url": "https://github.com/tanwenchaoya/wizard-cli/issues"
   },
   "dependencies": {
-    "@fighter-cli/package":"file:../../models/package",
-    "@fighter-cli/log": "file:../../utils/log"
+    "@fighter-cli/utils": "file:../../utils/utils",
+    "@fighter-cli/format-path": "file:../../utils/format-path",
+    "pkg-dir": "^5.0.0"
   }
 }
